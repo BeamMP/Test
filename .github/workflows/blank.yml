@@ -1,8 +1,5 @@
 name: Create Release Zip and SHA-256 - TEST
-on:
-  release:
-    types:
-      - created
+on: workflow_dispatch
 jobs:
   build:
     runs-on: ubuntu-latest
