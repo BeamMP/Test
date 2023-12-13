@@ -10,9 +10,9 @@ jobs:
         ref: 'main'
     - name: Download beamlings.zip from Beamlings repository
       env: 
-        GITHUB_TOKEN: ${{ secrets.PRIVATE_REPO_TOKEN }}
+        PRIVATE_REPO_TOKEN: ${{ secrets.PRIVATE_REPO_TOKEN }}
       run: |
-        ech "$GITHUB_TOKEN" | gh auth login --with-token
+        ech "$PRIVATE_REPO_TOKEN" | gh auth login --with-token
         gh release download --pattern "beamlings.zip" --repo github.com/BeamMP/Beamlings
       working-directory: ${{ github.workspace }}
     - name: Unpack beamlings.zip Content
