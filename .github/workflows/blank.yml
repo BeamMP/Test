@@ -30,14 +30,14 @@ jobs:
       run: |
         sha256sum BeamMP.zip | awk '{print $1}' > BeamMP.zip.sha256
       working-directory: ${{ github.workspace }}
-    - name: Upload artifacts
-      run: |
-        curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          -H "Content-Type: application/zip" \
-          --data-binary "@BeamMP.zip" \
-          --url "https://uploads.github.com/repos/${{ github.repository }}/releases/${{ github.event.release.id }}/assets?name=BeamMP.zip"
-        curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          -H "Content-Type: text/plain" \
-          --data-binary "@BeamMP.zip.sha256" \
-          --url "https://uploads.github.com/repos/${{ github.repository }}/releases/${{ github.event.release.id }}/assets?name=BeamMP.zip.sha256"
-      working-directory: ${{ github.workspace }}
+    #- name: Upload artifacts
+    #  run: |
+    #    curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+    #      -H "Content-Type: application/zip" \
+    #      --data-binary "@BeamMP.zip" \
+    #      --url "https://uploads.github.com/repos/${{ github.repository }}/releases/${{ github.event.release.id }}/assets?name=BeamMP.zip"
+    #    curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+    #      -H "Content-Type: text/plain" \
+    #      --data-binary "@BeamMP.zip.sha256" \
+    #      --url "https://uploads.github.com/repos/${{ github.repository }}/releases/${{ github.event.release.id }}/assets?name=BeamMP.zip.sha256"
+    #  working-directory: ${{ github.workspace }}
