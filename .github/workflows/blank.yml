@@ -7,7 +7,7 @@ jobs:
     - name: Check out the code
       uses: actions/checkout@v2
       with:
-        ref: 'development'
+        ref: 'main'
     - name: Download beamlings.zip from Beamlings repository
       run: |
         curl -L -o beamlings.zip https://github.com/BeamMP/Beamlings/releases/latest/download/beamlings.zip
