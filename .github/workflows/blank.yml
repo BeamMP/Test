@@ -10,9 +10,8 @@ jobs:
         ref: 'main'
     - name: Download beamlings.zip from Beamlings repository
       run: |
-        curl -L -o beamlings.zip https://github.com/BeamMP/Beamlings/releases/latest/download/beamlings.zip
+        curl -u ${{ secrets.PRIVATE_REPO_USERNAME }}:${{ secrets.PRIVATE_REPO_TOKEN }} -L -o beamlings.zip https://github.com/BeamMP/Beamlings/releases/latest/download/beamlings.zip
       working-directory: ${{ github.workspace }}
-
     - name: Unpack beamlings.zip Content
       run: |
         unzip -o beamlings.zip
