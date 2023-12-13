@@ -1,0 +1,46 @@
+name: Create Release Zip and SHA-256 - TEST
+on:
+  release:
+    types:
+      - created
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out the code
+      uses: actions/checkout@v2
+      with:
+        ref: 'development'
+    - name: Download beamlings.zip from Beamlings repository
+      run: |
+        curl -L -o beamlings.zip https://github.com/BeamMP/Beamlings/releases/latest/download/beamlings.zip
+      working-directory: ${{ github.workspace }}
+
+    - name: Unpack beamlings.zip Content
+      run: |
+        unzip -o beamlings.zip
+      working-directory: ${{ github.workspace }}
+    - name: Zip specific files and folders
+      run: |
+        zip -r BeamMP.zip icons lua mp_locales scripts settings ui vehicles CONTRIBUTING.md CODE_OF_CONDUCT.md LICENSE.md README.md
+      working-directory: ${{ github.workspace }}
+    - name: DEBUG
+      run: |
+        tree
+      working-directory: ${{ github.workspace }}
+    - name: Generate SHA-256 hash
+      id: sha256
+      run: |
+        sha256sum BeamMP.zip | awk '{print $1}' > BeamMP.zip.sha256
+      working-directory: ${{ github.workspace }}
+    - name: Upload artifacts
+      run: |
+        curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Content-Type: application/zip" \
+          --data-binary "@BeamMP.zip" \
+          --url "https://uploads.github.com/repos/${{ github.repository }}/releases/${{ github.event.release.id }}/assets?name=BeamMP.zip"
+        curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Content-Type: text/plain" \
+          --data-binary "@BeamMP.zip.sha256" \
+          --url "https://uploads.github.com/repos/${{ github.repository }}/releases/${{ github.event.release.id }}/assets?name=BeamMP.zip.sha256"
+      working-directory: ${{ github.workspace }}
